@@ -299,6 +299,7 @@
 				09EA1E771E6A4A1700BBFF11 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
