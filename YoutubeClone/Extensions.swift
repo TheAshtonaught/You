@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-//TODO: 26:00
 
 extension UIColor {
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
