@@ -29,15 +29,38 @@ class VideoCell: BaseCell {
         didSet {
             titleLabel.text = video?.title
             
-            //TODO: 19:31
-            
-            thumbnailImageView.image = UIImage(named: (video?.thumbnailImageName)!)
+            if let thumbnailImageName = video?.thumbnailImageName {
+                thumbnailImageView.image = UIImage(named: thumbnailImageName)
+            }
             
             if let profileImageName = video?.channel?.profileImageName {
                 userProfileImage.image = UIImage(named: profileImageName)
+                
+                
             }
             
+            if let ChannelName = video?.channel?.name, let numberOfViews = video?.numberOfViews {
+                
+                let numberFormatter = NumberFormatter()
+                numberFormatter.numberStyle = .decimal
+                
+                let formattedViews = numberFormatter.string(from: numberOfViews)!
+                
+                let subtitleText = "\(ChannelName) - \(formattedViews) - 2 Years ago"
+                subtitleTextView.text = subtitleText
+            }
             
+            if let title = video?.title {
+                let size = CGSize(width: frame.width - 32 - 4 - 8, height: 1000)
+                let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+                let estimatedRect = NSString(string: title).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14)], context: nil)
+                
+                if estimatedRect.size.height > 20 {
+                    titleLabelHeightConstraint?.constant = 44
+                } else {
+                    titleLabelHeightConstraint?.constant = 20
+                }
+            }
             
         }
     }
@@ -68,6 +91,7 @@ class VideoCell: BaseCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Taylor Swift - Blank Space"
+        label.numberOfLines = 2
         return label
     }()
     
@@ -79,6 +103,8 @@ class VideoCell: BaseCell {
         textView.textColor = UIColor.lightGray
         return textView
     }()
+    
+    var titleLabelHeightConstraint: NSLayoutConstraint?
     
     override func setupViews() {
         addSubview(thumbnailImageView)
@@ -92,7 +118,7 @@ class VideoCell: BaseCell {
         addConstraintsWithFormat(format: "H:|-16-[v0(44)]", views: userProfileImage)
         
         //vertical constraints
-        addConstraintsWithFormat(format: "V:|-16-[v0]-8-[v1(44)]-16-[v2(1)]|", views: thumbnailImageView, userProfileImage, seperatorView)
+        addConstraintsWithFormat(format: "V:|-16-[v0]-8-[v1(44)]-36-[v2(1)]|", views: thumbnailImageView, userProfileImage, seperatorView)
         addConstraintsWithFormat(format: "H:|[v0]|", views: seperatorView)
         
         //top constraints
@@ -101,8 +127,11 @@ class VideoCell: BaseCell {
         addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .left, relatedBy: .equal, toItem: userProfileImage, attribute: .right, multiplier: 1, constant: 8))
         //right constraint
         addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .right, relatedBy: .equal, toItem: thumbnailImageView, attribute: .right, multiplier: 1, constant: 0))
+        
         //height
-        addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 0, constant: 20))
+        titleLabelHeightConstraint = NSLayoutConstraint(item: titleLabel, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 0, constant: 44)
+        
+        addConstraint(titleLabelHeightConstraint!)
         
         //top constraints
         addConstraint(NSLayoutConstraint(item: subtitleTextView, attribute: .top, relatedBy: .equal, toItem: titleLabel, attribute: .bottom, multiplier: 1, constant: 4))
