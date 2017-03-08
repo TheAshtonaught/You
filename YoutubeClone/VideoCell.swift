@@ -8,10 +8,38 @@
 
 import UIKit
 
-class VideoCell: UICollectionViewCell {
+class BaseCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
+    }
+    
+    func setupViews() {
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+class VideoCell: BaseCell {
+    
+    var video: Video? {
+        didSet {
+            titleLabel.text = video?.title
+            
+            //TODO: 19:31
+            
+            thumbnailImageView.image = UIImage(named: (video?.thumbnailImageName)!)
+            
+            if let profileImageName = video?.channel?.profileImageName {
+                userProfileImage.image = UIImage(named: profileImageName)
+            }
+            
+            
+            
+        }
     }
     
     let thumbnailImageView: UIImageView = {
@@ -52,7 +80,7 @@ class VideoCell: UICollectionViewCell {
         return textView
     }()
     
-    func setupViews() {
+    override func setupViews() {
         addSubview(thumbnailImageView)
         addSubview(seperatorView)
         addSubview(userProfileImage)
@@ -86,8 +114,5 @@ class VideoCell: UICollectionViewCell {
         addConstraint(NSLayoutConstraint(item: subtitleTextView, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 0, constant: 30))
         
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+
 }
