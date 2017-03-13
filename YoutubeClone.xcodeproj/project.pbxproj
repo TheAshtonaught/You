@@ -13,6 +13,7 @@
 		0910E5791E6F842400690A29 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0910E5781E6F842400690A29 /* Video.swift */; };
 		0980C0921E737E3600500170 /* SettingsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980C0911E737E3600500170 /* SettingsLauncher.swift */; };
 		0980C0941E7387B400500170 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980C0931E7387B400500170 /* SettingCell.swift */; };
+		09BE8F1D1E7670410025ABB4 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BE8F1C1E7670410025ABB4 /* ApiService.swift */; };
 		09EA1E671E6A4A1700BBFF11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EA1E661E6A4A1700BBFF11 /* AppDelegate.swift */; };
 		09EA1E691E6A4A1700BBFF11 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EA1E681E6A4A1700BBFF11 /* HomeController.swift */; };
 		09EA1E6C1E6A4A1700BBFF11 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09EA1E6A1E6A4A1700BBFF11 /* Main.storyboard */; };
@@ -27,6 +28,7 @@
 		0910E5781E6F842400690A29 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		0980C0911E737E3600500170 /* SettingsLauncher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsLauncher.swift; sourceTree = "<group>"; };
 		0980C0931E7387B400500170 /* SettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		09BE8F1C1E7670410025ABB4 /* ApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		09EA1E631E6A4A1700BBFF11 /* YoutubeClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YoutubeClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09EA1E661E6A4A1700BBFF11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09EA1E681E6A4A1700BBFF11 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -82,6 +84,14 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		09BE8F1B1E766FE10025ABB4 /* ApiService */ = {
+			isa = PBXGroup;
+			children = (
+				09BE8F1C1E7670410025ABB4 /* ApiService.swift */,
+			);
+			name = ApiService;
+			sourceTree = "<group>";
+		};
 		09EA1E5A1E6A4A1700BBFF11 = {
 			isa = PBXGroup;
 			children = (
@@ -101,6 +111,7 @@
 		09EA1E651E6A4A1700BBFF11 /* YoutubeClone */ = {
 			isa = PBXGroup;
 			children = (
+				09BE8F1B1E766FE10025ABB4 /* ApiService */,
 				0910E5761E6F83F900690A29 /* Model */,
 				09040AEA1E6D740700D14888 /* View */,
 				09040AED1E6E3E0A00D14888 /* Controller */,
@@ -191,6 +202,7 @@
 				0980C0941E7387B400500170 /* SettingCell.swift in Sources */,
 				09040AEC1E6E3DA000D14888 /* VideoCell.swift in Sources */,
 				0980C0921E737E3600500170 /* SettingsLauncher.swift in Sources */,
+				09BE8F1D1E7670410025ABB4 /* ApiService.swift in Sources */,
 				09040AE91E6D736500D14888 /* Extensions.swift in Sources */,
 				09EA1E671E6A4A1700BBFF11 /* AppDelegate.swift in Sources */,
 				09040AEF1E6E3FAA00D14888 /* MenuBar.swift in Sources */,
