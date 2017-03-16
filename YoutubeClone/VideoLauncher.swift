@@ -10,11 +10,39 @@ import UIKit
 import AVFoundation
 
 class VideoPlayerView: UIView {
+    
+    let activityIndicatorView: UIActivityIndicatorView = {
+        let aiv = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        aiv.translatesAutoresizingMaskIntoConstraints = false
+        aiv.startAnimating()
+        return aiv
+    }()
+    
+    let controlContainerView: UIView = {
+        
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        return view
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        setupPlayerView()
+        
+        controlContainerView.frame = frame
+        addSubview(controlContainerView)
+        
+        controlContainerView.addSubview(activityIndicatorView)
+        activityIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        activityIndicatorView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        
         backgroundColor = UIColor.black
         
+        
+    }
+    
+    private func setupPlayerView() {
         let urlString = "http://www.html5videoplayer.net/videos/toystory.mp4"
         if let url = NSURL(string: urlString) {
             let player = AVPlayer(url: url as URL)
@@ -25,8 +53,6 @@ class VideoPlayerView: UIView {
             
             player.play()
         }
-        
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

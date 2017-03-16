@@ -29,11 +29,8 @@ class VideoCell: BaseCell {
         didSet {
             titleLabel.text = video?.title
             
-            
             setupThumbnailImage()
-            
             setupProfileImage()
-            
             
             if let ChannelName = video?.channel?.name, let numberOfViews = video?.number_of_views {
                 
@@ -62,7 +59,6 @@ class VideoCell: BaseCell {
     }
     
     func setupProfileImage() {
-        
         
         if let profileImageUrl = video?.channel?.profile_image_name {
             userProfileImage.loadImageUsingUrlString(urlString: profileImageUrl)
