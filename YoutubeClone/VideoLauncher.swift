@@ -18,10 +18,38 @@ class VideoPlayerView: UIView {
         return aiv
     }()
     
+    lazy var pauseButton: UIButton = {
+        let button = UIButton(type: .system)
+        let image = UIImage(named: "pause")
+        button.setImage(image, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.tintColor = UIColor.white
+        button.isHidden = true
+        
+        button.addTarget(self, action: #selector(handlePause), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    var isPlaying = false
+    
+    func handlePause() {
+        player?.pause()
+        if isPlaying {
+            player?.pause()
+            pauseButton.setImage(UIImage(named: "play"), for: .normal)
+        } else {
+            player?.play()
+            pauseButton.setImage(UIImage(named: "pause"), for: .normal)
+        }
+        
+        isPlaying = !isPlaying
+    }
+    
     let controlContainerView: UIView = {
         
         let view = UIView()
-        view.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        view.backgroundColor = UIColor(white: 0, alpha: 1)
         return view
     }()
     
@@ -36,22 +64,43 @@ class VideoPlayerView: UIView {
         controlContainerView.addSubview(activityIndicatorView)
         activityIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         activityIndicatorView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+     
+        controlContainerView.addSubview(pauseButton)
+        pauseButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        pauseButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        pauseButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        pauseButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         backgroundColor = UIColor.black
         
         
     }
     
+    var player: AVPlayer?
+    
     private func setupPlayerView() {
         let urlString = "http://www.html5videoplayer.net/videos/toystory.mp4"
         if let url = NSURL(string: urlString) {
-            let player = AVPlayer(url: url as URL)
+            
+            player = AVPlayer(url: url as URL)
             
             let playerLayer = AVPlayerLayer(player: player)
             self.layer.addSublayer(playerLayer)
             playerLayer.frame = self.frame
             
-            player.play()
+            player?.play()
+            
+            player?.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges", options: .new, context: nil)
+        }
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "currentItem.loadedTimeRanges" {
+            
+            activityIndicatorView.stopAnimating()
+            controlContainerView.backgroundColor = UIColor.clear
+            pauseButton.isHidden = false
+            isPlaying = true
         }
     }
     
