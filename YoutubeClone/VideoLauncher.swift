@@ -104,6 +104,7 @@ class VideoPlayerView: UIView {
         super.init(frame: frame)
         
         setupPlayerView()
+        setupGradientLayer()
         
         controlContainerView.frame = frame
         addSubview(controlContainerView)
@@ -159,6 +160,21 @@ class VideoPlayerView: UIView {
             player?.play()
             
             player?.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges", options: .new, context: nil)
+            
+            let interval = CMTime(value: 1, timescale: 2)
+            player?.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: { (progressTime) in
+                
+                let seconds = CMTimeGetSeconds(progressTime)
+                let secondsString = String(format: "%02d", Int(seconds.truncatingRemainder(dividingBy: 60)))
+                let minutesString = String(format: "%02d", Int(seconds / 60))
+                
+                self.currentTimeLabel.text = "\(minutesString):\(secondsString)"
+                
+                if let duration = self.player?.currentItem?.duration {
+                    let durationInSeconds = CMTimeGetSeconds(duration)
+                    self.videoSlider.value = Float(seconds / durationInSeconds)
+                }
+            })
         }
     }
     
@@ -182,6 +198,11 @@ class VideoPlayerView: UIView {
     }
     
     private func setupGradientLayer() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = bounds
+        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
+        gradientLayer.locations = [0.7, 1.2]
+        controlContainerView.layer.addSublayer(gradientLayer)
         
     }
     
